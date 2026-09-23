@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import careerScopeLogo from "../assets/careerscope-logo.png";
+import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { to: "/", label: "Home" },
@@ -39,15 +40,19 @@ export function SiteNav() {
               {l.label}
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
 
-        <button
-          className="rounded-xl border border-border p-2 text-foreground lg:hidden"
-          onClick={() => setOpen((o) => !o)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            className="rounded-xl border border-border p-2 text-foreground"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (

@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { SiteNav } from "../components/SiteNav";
 import { Toaster } from "../components/ui/sonner";
+import { ThemeProvider } from "../hooks/use-theme";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -108,11 +109,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+// Runs before React hydrates so the correct theme class is set immediately,
+// preventing a flash of the wrong theme on page load.
+const themeInitScript = `
+  (function() {
+    var theme = localStorage.getItem('careerscope-theme') || 'system';
+    var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.classList.toggle('dark', isDark);
+  })();
+`;
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         {children}
@@ -126,19 +138,21 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
-        <SiteNav />
-        <Toaster position="top-center" richColors />
-        <main className="flex-1 px-4 py-10 sm:px-6">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <footer className="border-t border-border/60 bg-card/60 px-4 py-6 text-center text-sm text-muted-foreground">
-          CareerScope — built for students aged 15–18. Career info is a guide, not official advice:
-          always double-check entry requirements with the university, TAFE or employer.
-        </footer>
-      </div>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <div className="flex min-h-screen flex-col">
+          <SiteNav />
+          <Toaster position="top-center" richColors />
+          <main className="flex-1 px-4 py-10 sm:px-6">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <footer className="border-t border-border/60 bg-card/60 px-4 py-6 text-center text-sm text-muted-foreground">
+            CareerScope — built for students aged 15–18. Career info is a guide, not official advice:
+            always double-check entry requirements with the university, TAFE or employer.
+          </footer>
+        </div>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
