@@ -8,9 +8,9 @@ bbb
 - tbc
 
 ## How to run (Window)
-1. Download the file
-2. Open Terminal 
-3. irm bun.sh/install.ps1 | iex *Steps from now on would just be copy and paste in terminal*
+1. Download the files
+2. Open Terminal (*Steps from now on would just be copy and paste in terminal*)
+3. irm bun.sh/install.ps1 | iex 
 4. winget install CoreyButler.NVMforWindows
 5. winget upgrade CoreyButler.NVMforWindows 
 6. nvm install 22
@@ -18,6 +18,17 @@ bbb
 9. cd "*pathway to the project*"
 10. bun install
 11. bun run dev
+
+## How to run (Mac)
+1. Download the files
+2. Open Terminal (*Steps from now on would just be copy and paste in terminal*)
+3. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash 
+4. nvm install 22
+5. nvm use 22
+6. curl -fsSL https://bun.sh/install | bash
+7. cd "*pathway to the project*"
+8. bun install
+9. bun run dev
 
 ## Built with
 - TanStack Start
