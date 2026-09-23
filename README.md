@@ -47,6 +47,9 @@ bbb
 <img width="1541" height="933" alt="image" src="https://github.com/user-attachments/assets/0152e6cb-d0ee-4884-abf7-3a808aa3199b" />
 <img width="1436" height="937" alt="image" src="https://github.com/user-attachments/assets/038e3b52-e6b5-43de-814b-e82df9cb0e73" />
 
+# Credits
+Lovable for helping out with making the site
+
 
 
 
